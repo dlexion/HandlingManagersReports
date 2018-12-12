@@ -53,6 +53,7 @@
     <Compile Include="Customer.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Item.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
@@ -78,6 +79,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\GenericRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
