@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportHandler.DAL", "ReportHandler.DAL\ReportHandler.DAL.csproj", "{B54AC80F-47BE-406D-AC4A-25CC6F613153}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B54AC80F-47BE-406D-AC4A-25CC6F613153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B54AC80F-47BE-406D-AC4A-25CC6F613153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B54AC80F-47BE-406D-AC4A-25CC6F613153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B54AC80F-47BE-406D-AC4A-25CC6F613153}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FD9CE3B5-E787-4902-A68A-64638AA906FA}
+	EndGlobalSection
+EndGlobal
