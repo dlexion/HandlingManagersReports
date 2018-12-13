@@ -62,6 +62,7 @@
     <Compile Include="Models\AutoMapperProfile.cs" />
     <Compile Include="Models\GenericUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Unity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
