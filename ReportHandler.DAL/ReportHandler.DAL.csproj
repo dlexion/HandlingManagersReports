@@ -53,6 +53,7 @@
     <Compile Include="Customer.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IDbContextFactory.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Item.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
@@ -60,6 +61,7 @@
     <Compile Include="Manager.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DbContextFactory.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
