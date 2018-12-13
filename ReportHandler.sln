@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportHandler.DAL", "ReportHandler.DAL\ReportHandler.DAL.csproj", "{B54AC80F-47BE-406D-AC4A-25CC6F613153}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportHandler.BLL", "ReportHandler.BLL\ReportHandler.BLL.csproj", "{1C54F29F-B257-4091-A7E0-885B96618620}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B54AC80F-47BE-406D-AC4A-25CC6F613153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B54AC80F-47BE-406D-AC4A-25CC6F613153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B54AC80F-47BE-406D-AC4A-25CC6F613153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C54F29F-B257-4091-A7E0-885B96618620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C54F29F-B257-4091-A7E0-885B96618620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C54F29F-B257-4091-A7E0-885B96618620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C54F29F-B257-4091-A7E0-885B96618620}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
