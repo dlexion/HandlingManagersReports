@@ -54,10 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\CustomerDTO.cs" />
-    <Compile Include="DTO\ItemDTO.cs" />
-    <Compile Include="DTO\ManagerDTO.cs" />
-    <Compile Include="DTO\OrderDTO.cs" />
     <Compile Include="Extensions\ExpressionExtension.cs" />
     <Compile Include="Models\AutoMapperProfile.cs" />
     <Compile Include="Models\GenericUnitOfWork.cs" />
@@ -69,10 +65,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReportHandler.DAL\ReportHandler.DAL.csproj">
-      <Project>{B54AC80F-47BE-406D-AC4A-25CC6F613153}</Project>
-      <Name>ReportHandler.DAL</Name>
+    <ProjectReference Include="..\ReportHandler.DAL.Contracts\ReportHandler.DAL.Contracts.csproj">
+      <Project>{91c2ace7-e449-4b0c-805c-eb8158b5a5aa}</Project>
+      <Name>ReportHandler.DAL.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

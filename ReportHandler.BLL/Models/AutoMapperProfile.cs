@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ReportHandler.BLL.DTO;
 using ReportHandler.DAL;
 using System;
 using System.Collections.Generic;

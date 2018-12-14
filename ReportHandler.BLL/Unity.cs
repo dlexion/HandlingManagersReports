@@ -1,7 +1,7 @@
-﻿using ReportHandler.BLL.DTO;
-using ReportHandler.BLL.Models;
+﻿using ReportHandler.BLL.Models;
 using ReportHandler.DAL;
-using ReportHandler.DAL.Interfaces;
+using ReportHandler.DAL.Contracts.DTO;
+using ReportHandler.DAL.Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +20,8 @@ namespace ReportHandler.BLL
         // TODO use connection string as parametr to create DbContext
         public Unity()
         {
-            _contextFactory = new DAL.Models.DbContextFactory();
+            // TODO get factory throw service locator
+            _contextFactory = null;
         }
 
         public Task<bool> ParseFile(string path)
@@ -58,7 +59,7 @@ namespace ReportHandler.BLL
 
         private void ProcessManager(string managerLine)
         {
-            using (var context = _contextFactory.CreateInstance())
+            using (var context = _contextFactory.GetInstance())
             {
                 Expression<Func<ManagerDTO, bool>> managerSearchCriteria = x => x.LastName == managerLine;
 

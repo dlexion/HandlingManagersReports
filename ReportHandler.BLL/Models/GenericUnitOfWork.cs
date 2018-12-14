@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ReportHandler.BLL.Extensions;
 using ReportHandler.DAL;
-using ReportHandler.DAL.Repositories;
+using ReportHandler.DAL.Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,13 +17,14 @@ namespace ReportHandler.BLL.Models
     {
         private DbContext _context;
         private ReaderWriterLockSlim _locker;
-        private GenericRepository<TEntity> _repository;
+        private IGenericRepository<TEntity> _repository;
 
         public GenericUnitOfWork(DbContext context, ReaderWriterLockSlim locker)
         {
             _context = context;
             _locker = locker;
-            _repository = new GenericRepository<TEntity>(_context);
+            // TODO Factory
+            //_repository = new GenericRepository<TEntity>(_context);
         }
 
         public TModel TryGet(Expression<Func<TModel, bool>> searchExpression)
