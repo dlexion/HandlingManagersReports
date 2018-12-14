@@ -1,4 +1,4 @@
-﻿using ReportHandler.DAL.Interfaces;
+﻿using ReportHandler.DAL.Contracts.Interfaces;
 using System;
 using System.Data.Entity;
 using System.Linq;

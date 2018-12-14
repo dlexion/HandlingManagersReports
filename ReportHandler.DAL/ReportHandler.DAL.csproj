@@ -53,8 +53,6 @@
     <Compile Include="Customer.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IDbContextFactory.cs" />
-    <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Item.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
@@ -113,5 +111,12 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReportHandler.DAL.Contracts\ReportHandler.DAL.Contracts.csproj">
+      <Project>{91c2ace7-e449-4b0c-805c-eb8158b5a5aa}</Project>
+      <Name>ReportHandler.DAL.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

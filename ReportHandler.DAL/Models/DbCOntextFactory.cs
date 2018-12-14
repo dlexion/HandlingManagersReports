@@ -1,4 +1,4 @@
-﻿using ReportHandler.DAL.Interfaces;
+﻿using ReportHandler.DAL.Contracts.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,7 +11,7 @@ namespace ReportHandler.DAL.Models
 {
     public class DbContextFactory : IDbContextFactory
     {
-        public DbContext CreateInstance()
+        public DbContext GetInstance()
         {
             return new ReportModelContainer();
         }

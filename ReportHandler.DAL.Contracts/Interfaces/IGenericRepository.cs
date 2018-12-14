@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace ReportHandler.DAL.Interfaces
+namespace ReportHandler.DAL.Contracts.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
