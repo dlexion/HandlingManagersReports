@@ -10,7 +10,7 @@ namespace ReportHandler.DAL.Contracts.DTO
     {
         public int Id { get; set; }
         public System.DateTime Date { get; set; }
-        public string Cost { get; set; }
+        public decimal Cost { get; set; }
 
         public virtual ManagerDTO Manager { get; set; }
         public virtual CustomerDTO Customer { get; set; }

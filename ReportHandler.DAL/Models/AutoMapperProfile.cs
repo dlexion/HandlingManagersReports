@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using ReportHandler.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ReportHandler.DAL.Contracts.DTO;
 
-namespace ReportHandler.BLL.Models
+namespace ReportHandler.DAL.Models
 {
     public class AutoMapperProfile : Profile
     {

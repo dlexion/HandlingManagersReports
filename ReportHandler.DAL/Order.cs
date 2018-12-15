@@ -18,7 +18,7 @@ namespace ReportHandler.DAL
         public int ManagerId { get; set; }
         public int CustomerId { get; set; }
         public System.DateTime Date { get; set; }
-        public string Cost { get; set; }
+        public decimal Cost { get; set; }
     
         public virtual Manager Manager { get; set; }
         public virtual Customer Customer { get; set; }

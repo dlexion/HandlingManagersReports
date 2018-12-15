@@ -3,6 +3,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using AutoMapper;
 
 namespace ReportHandler.DAL.Repositories
 {
@@ -19,6 +20,8 @@ namespace ReportHandler.DAL.Repositories
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null)
         {
+            // TODO convert expression because t is DTO
+
             return predicate != null 
                 ? _dbSet.Where(predicate) 
                 : _dbSet;
@@ -26,22 +29,28 @@ namespace ReportHandler.DAL.Repositories
 
         public void Add(T item)
         {
-            _dbSet.Add(item);
+            var entity = Mapper.Map<T>(item);
+
+            _dbSet.Add(entity);
         }
 
         public void Remove(T item)
         {
-            if (_context.Entry(item).State == EntityState.Detached)
+            var entity = Mapper.Map<T>(item);
+
+            if (_context.Entry(entity).State == EntityState.Detached)
             {
-                _dbSet.Attach(item);
+                _dbSet.Attach(entity);
             }
-            _dbSet.Remove(item);
+            _dbSet.Remove(entity);
         }
 
         public void Update(T item)
         {
-            _dbSet.Attach(item);
-            _context.Entry(item).State = EntityState.Modified;
+            var entity = Mapper.Map<T>(item);
+
+            _dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Save()

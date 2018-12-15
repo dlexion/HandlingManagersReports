@@ -45,7 +45,7 @@
     <Property Name="ManagerId" Type="int" Nullable="false" />
     <Property Name="CustomerId" Type="int" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="Cost" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Cost" Type="decimal" Nullable="false" />
     <Property Name="Item_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Customers">
@@ -141,7 +141,7 @@
           <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Item" Relationship="ReportModel.OrderItem" FromRole="Order" ToRole="Item" />
           <Property Name="Date" Type="DateTime" Nullable="false" />
-          <Property Name="Cost" Type="String" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
