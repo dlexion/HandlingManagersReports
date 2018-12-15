@@ -12,17 +12,17 @@ using ReportHandler.DAL.Repositories;
 
 namespace ReportHandler.DAL.Models
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private DbContext _context;
-        private IGenericRepository<Customer> _customers;
-        private IGenericRepository<Item> _items;
-        private IGenericRepository<Manager> _managers;
-        private IGenericRepository<Order> _orders;
+        private readonly DbContext _context;
+        private readonly IGenericRepository<Customer> _customers;
+        private readonly IGenericRepository<Item> _items;
+        private readonly IGenericRepository<Manager> _managers;
+        private readonly IGenericRepository<Order> _orders;
 
         public UnitOfWork()
         {
-            AutoMapperConfiguration.Configure();
+            //AutoMapperConfiguration.Configure();
 
             _context = new ReportModelContainer();
 
