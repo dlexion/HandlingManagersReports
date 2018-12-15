@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ReportHandler.DAL.Contracts.DTO;
 
-namespace ReportHandler.DAL.Models
+namespace ReportHandler.DAL.AutoMapperSetup
 {
     public class AutoMapperProfile : Profile
     {

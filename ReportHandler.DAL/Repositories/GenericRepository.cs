@@ -1,9 +1,11 @@
 ﻿using ReportHandler.DAL.Contracts.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
+using ReportHandler.DAL.Contracts.DTO;
 
 namespace ReportHandler.DAL.Repositories
 {
@@ -20,37 +22,29 @@ namespace ReportHandler.DAL.Repositories
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate = null)
         {
-            // TODO convert expression because t is DTO
-
-            return predicate != null 
-                ? _dbSet.Where(predicate) 
+            return predicate != null
+                ? _dbSet.Where(predicate)
                 : _dbSet;
         }
 
         public void Add(T item)
         {
-            var entity = Mapper.Map<T>(item);
-
-            _dbSet.Add(entity);
+            _dbSet.Add(item);
         }
 
         public void Remove(T item)
         {
-            var entity = Mapper.Map<T>(item);
-
-            if (_context.Entry(entity).State == EntityState.Detached)
+            if (_context.Entry(item).State == EntityState.Detached)
             {
-                _dbSet.Attach(entity);
+                _dbSet.Attach(item);
             }
-            _dbSet.Remove(entity);
+            _dbSet.Remove(item);
         }
 
         public void Update(T item)
         {
-            var entity = Mapper.Map<T>(item);
-
-            _dbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            _dbSet.Attach(item);
+            _context.Entry(item).State = EntityState.Modified;
         }
 
         public void Save()

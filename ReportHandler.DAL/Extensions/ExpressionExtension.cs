@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ReportHandler.BLL.Extensions
+namespace ReportHandler.DAL.Extensions
 {
     public static class ExpressionExtension
     {
         public static Expression<Func<TTargetType, bool>> Project<TSourceType, TTargetType>(this Expression<Func<TSourceType, bool>> sourceExpression)
         {
+            if (sourceExpression == null)
+            {
+                return null;
+            }
+
             ParameterExpression sourceParameter = sourceExpression.Parameters.FirstOrDefault();
             ParameterExpression targetParameter = Expression.Parameter(typeof(TTargetType), sourceParameter.Name);
             Expression newBody = new TransformVisitor<TTargetType>(sourceParameter, targetParameter).Visit(sourceExpression.Body);
