@@ -74,6 +74,7 @@ namespace ReportHandler.DAL.Models
 
             var result = _customers.Get(newExpression);
 
+            var a= result.Count();
             return Mapper.Map<IEnumerable<CustomerDTO>>(result);
         }
 

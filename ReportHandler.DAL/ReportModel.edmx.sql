@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/15/2018 13:21:57
+-- Date Created: 12/15/2018 23:55:24
 -- Generated from EDMX file: C:\Users\Alexey\source\repos\ReportHandler\ReportHandler.DAL\ReportModel.edmx
 -- --------------------------------------------------
 
@@ -23,8 +23,8 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CustomerOrder]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Orders] DROP CONSTRAINT [FK_CustomerOrder];
 GO
-IF OBJECT_ID(N'[dbo].[FK_OrderItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Orders] DROP CONSTRAINT [FK_OrderItem];
+IF OBJECT_ID(N'[dbo].[FK_ItemOrder]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Orders] DROP CONSTRAINT [FK_ItemOrder];
 GO
 
 -- --------------------------------------------------
@@ -67,9 +67,9 @@ CREATE TABLE [dbo].[Orders] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [ManagerId] int  NOT NULL,
     [CustomerId] int  NOT NULL,
+    [ItemId] int  NOT NULL,
     [Date] datetime  NOT NULL,
-    [Cost] decimal(18,0)  NOT NULL,
-    [Item_Id] int  NOT NULL
+    [Cost] decimal(18,0)  NOT NULL
 );
 GO
 
@@ -143,19 +143,19 @@ ON [dbo].[Orders]
     ([CustomerId]);
 GO
 
--- Creating foreign key on [Item_Id] in table 'Orders'
+-- Creating foreign key on [ItemId] in table 'Orders'
 ALTER TABLE [dbo].[Orders]
-ADD CONSTRAINT [FK_OrderItem]
-    FOREIGN KEY ([Item_Id])
+ADD CONSTRAINT [FK_ItemOrder]
+    FOREIGN KEY ([ItemId])
     REFERENCES [dbo].[Items]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_OrderItem'
-CREATE INDEX [IX_FK_OrderItem]
+-- Creating non-clustered index for FOREIGN KEY 'FK_ItemOrder'
+CREATE INDEX [IX_FK_ItemOrder]
 ON [dbo].[Orders]
-    ([Item_Id]);
+    ([ItemId]);
 GO
 
 -- --------------------------------------------------

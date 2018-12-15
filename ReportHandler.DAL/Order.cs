@@ -17,6 +17,7 @@ namespace ReportHandler.DAL
         public int Id { get; set; }
         public int ManagerId { get; set; }
         public int CustomerId { get; set; }
+        public int ItemId { get; set; }
         public System.DateTime Date { get; set; }
         public decimal Cost { get; set; }
     

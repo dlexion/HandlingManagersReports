@@ -21,8 +21,9 @@ namespace ReportHandler.DAL.AutoMapperSetup
 
             CreateMap<Order, OrderDTO>();
             CreateMap<OrderDTO, Order>()
-                .ForMember(x => x.ManagerId, option => option.Ignore())
-                .ForMember(x => x.CustomerId, option => option.Ignore());
+            .ForMember(x => x.Manager, option => option.Ignore())
+            .ForMember(x => x.Customer, option => option.Ignore())
+            .ForMember(x => x.Item, option => option.Ignore());
         }
 
     }
