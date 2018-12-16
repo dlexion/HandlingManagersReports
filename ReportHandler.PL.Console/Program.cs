@@ -1,6 +1,7 @@
-﻿using ReportHandler.BLL.Models;
+﻿using System;
+using System.Configuration;
+using ReportHandler.BLL.Models;
 using ReportHandler.DAL.AutoMapperSetup;
-using ReportHandler.DAL.Contracts.DTO;
 using ReportHandler.DAL.Contracts.Interfaces;
 using ReportHandler.DAL.Models;
 using SimpleInjector;
@@ -13,6 +14,8 @@ namespace ReportHandler.PL.Console
 
         static Program()
         {
+            AutoMapperConfiguration.Configure();
+
             container = new Container();
 
             container.RegisterInstance<IUnitOfWorkFactory>(new UnitOfWorkFactory());
@@ -23,13 +26,24 @@ namespace ReportHandler.PL.Console
 
         static void Main(string[] args)
         {
-            AutoMapperConfiguration.Configure();
+            var folderToWatch = string.Empty;
+            var fileFilter = string.Empty;
 
-            // TODO take parameters from config
-            var watcher = new FolderWatcher(@"D:\TestFolder", "*.csv", container.GetInstance<FileHandler>());
-            watcher.Start();
+            try
+            {
+                folderToWatch = ConfigurationManager.AppSettings["FolderToWatch"];
+                fileFilter = ConfigurationManager.AppSettings["FileFilter"];
 
-            System.Console.ReadKey();
+                var watcher = new FolderWatcher(folderToWatch, fileFilter, container.GetInstance<FileHandler>());
+                watcher.Start();
+
+                System.Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                System.Console.ReadKey();
+            }
         }
     }
 }
