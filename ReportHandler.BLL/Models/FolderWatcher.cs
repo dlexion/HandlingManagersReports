@@ -28,6 +28,7 @@ namespace ReportHandler.BLL.Models
                 InitializeWatcher();
             }
 
+            _watcher.Created += Watcher_Created;
             _watcher.EnableRaisingEvents = true;
         }
 
@@ -52,8 +53,6 @@ namespace ReportHandler.BLL.Models
                 NotifyFilter = NotifyFilters.FileName
                                | NotifyFilters.DirectoryName
             };
-
-            _watcher.Created += Watcher_Created;
         }
 
         public void Dispose()
