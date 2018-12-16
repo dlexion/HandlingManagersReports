@@ -69,6 +69,7 @@
     <Compile Include="AutoMapperSetup\AutoMapperConfiguration.cs" />
     <Compile Include="AutoMapperSetup\AutoMapperProfile.cs" />
     <Compile Include="Models\UnitOfWork.cs" />
+    <Compile Include="Models\UnitOfWorkFactory.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>ReportModel.tt</DependentUpon>
     </Compile>
