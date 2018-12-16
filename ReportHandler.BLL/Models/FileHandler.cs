@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ReportHandler.DAL.Contracts.DTO;
+using ReportHandler.DAL.Contracts.Interfaces;
 using ReportHandler.DAL.Models;
 
 namespace ReportHandler.BLL.Models
@@ -17,6 +18,13 @@ namespace ReportHandler.BLL.Models
             {typeof(CustomerDTO), new object() },
             {typeof(ItemDTO), new object() }
         };
+
+        private readonly IUnitOfWorkFactory _factory;
+
+        public FileHandler(IUnitOfWorkFactory factory)
+        {
+            _factory = factory;
+        }
 
         public Task<bool> ParseFile(string path)
         {
@@ -60,7 +68,7 @@ namespace ReportHandler.BLL.Models
 
         private void SaveOrder(OrderDTO order)
         {
-            using (var uow = new UnitOfWork())
+            using (var uow = _factory.GetInstance())
             {
                 uow.AddOrder(order);
                 uow.Save();
@@ -74,7 +82,7 @@ namespace ReportHandler.BLL.Models
 
         private ManagerDTO ProcessManager(string managerLine)
         {
-            using (var uow = new UnitOfWork())
+            using (var uow = _factory.GetInstance())
             {
                 Expression<Func<ManagerDTO, bool>> managerSearchCriteria = x => x.LastName == managerLine;
 
@@ -100,7 +108,7 @@ namespace ReportHandler.BLL.Models
 
         private ItemDTO ProcessItem(string itemLine)
         {
-            using (var uow = new UnitOfWork())
+            using (var uow = _factory.GetInstance())
             {
                 Expression<Func<ItemDTO, bool>> itemSearchCriteria = x => x.Name == itemLine;
 
@@ -126,7 +134,7 @@ namespace ReportHandler.BLL.Models
 
         private CustomerDTO ProcessCustomer(string customerLine)
         {
-            using (var uow = new UnitOfWork())
+            using (var uow = _factory.GetInstance())
             {
                 var name = ParseFullName(customerLine);
                 var first = name[0];
