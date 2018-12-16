@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportHandler.BLL", "Report
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportHandler.DAL.Contracts", "ReportHandler.DAL.Contracts\ReportHandler.DAL.Contracts.csproj", "{91C2ACE7-E449-4B0C-805C-EB8158B5A5AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportHandler.PL.Console", "ReportHandler.PL.Console\ReportHandler.PL.Console.csproj", "{5110B7AA-0A21-4ABA-92D0-88D660128361}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{91C2ACE7-E449-4B0C-805C-EB8158B5A5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91C2ACE7-E449-4B0C-805C-EB8158B5A5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91C2ACE7-E449-4B0C-805C-EB8158B5A5AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5110B7AA-0A21-4ABA-92D0-88D660128361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5110B7AA-0A21-4ABA-92D0-88D660128361}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5110B7AA-0A21-4ABA-92D0-88D660128361}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5110B7AA-0A21-4ABA-92D0-88D660128361}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
