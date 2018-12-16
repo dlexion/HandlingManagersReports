@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
-using ReportHandler.DAL.AutoMapperSetup;
 using ReportHandler.DAL.Contracts.DTO;
 using ReportHandler.DAL.Contracts.Interfaces;
 using ReportHandler.DAL.Extensions;
@@ -74,7 +72,6 @@ namespace ReportHandler.DAL.Models
 
             var result = _customers.Get(newExpression);
 
-            var a= result.Count();
             return Mapper.Map<IEnumerable<CustomerDTO>>(result);
         }
 
@@ -171,10 +168,7 @@ namespace ReportHandler.DAL.Models
 
         public void Save()
         {
-            _items.Save();
-            _customers.Save();
-            _managers.Save();
-            _orders.Save();
+            _context.SaveChanges();
         }
 
         // TODO
