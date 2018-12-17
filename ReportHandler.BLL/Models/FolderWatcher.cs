@@ -6,20 +6,20 @@ namespace ReportHandler.BLL.Models
 {
     public sealed class FolderWatcher : IDisposable
     {
-        private readonly string _path;
+        private readonly string _folderToWatch;
         private readonly string _filter;
-        private readonly string _folderForProcessedFile;
+        private readonly string _folderForProcessedFiles;
 
         private readonly IFileHandler _handler;
 
         private FileSystemWatcher _watcher;
 
-        public FolderWatcher(string path, string filter, string folderForProcessedFile, IFileHandler fileHandler)
+        public FolderWatcher(string folderToWatch, string filter, string folderForProcessedFiles, IFileHandler fileHandler)
         {
             _handler = fileHandler;
-            _path = path;
+            _folderToWatch = folderToWatch;
             _filter = filter;
-            _folderForProcessedFile = folderForProcessedFile;
+            _folderForProcessedFiles = folderForProcessedFiles;
 
             InitializeWatcher();
         }
@@ -46,12 +46,17 @@ namespace ReportHandler.BLL.Models
 
         private void Watcher_Created(object sender, FileSystemEventArgs e)
         {
-            _handler.ParseFile(e.FullPath, _folderForProcessedFile);
+            _handler.ParseFile(e.FullPath, _folderForProcessedFiles);
         }
 
         private void InitializeWatcher()
         {
-            _watcher = new FileSystemWatcher(_path, _filter)
+            if (!Directory.Exists(_folderToWatch))
+            {
+                throw new ArgumentException("Directory does not exist.", nameof(_folderToWatch));
+            }
+
+            _watcher = new FileSystemWatcher(_folderToWatch, _filter)
             {
                 NotifyFilter = NotifyFilters.FileName
                                | NotifyFilters.DirectoryName
@@ -60,11 +65,11 @@ namespace ReportHandler.BLL.Models
 
         private void ProcessExistingFiles()
         {
-            string[] fileList = Directory.GetFiles(_path, _filter);
+            string[] fileList = Directory.GetFiles(_folderToWatch, _filter);
 
             foreach (var filePath in fileList)
             {
-                _handler.ParseFile(filePath, _folderForProcessedFile);
+                _handler.ParseFile(filePath, _folderForProcessedFiles);
             }
         }
 
