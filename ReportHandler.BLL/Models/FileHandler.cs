@@ -36,6 +36,11 @@ namespace ReportHandler.BLL.Models
                 return null;
             }
 
+            if (fileInfo.Extension != ".csv")
+            {
+                throw new FormatException("file extension");
+            }
+
             return Task.Factory.StartNew(() =>
             {
                 using (var sr = new StreamReader(path))
