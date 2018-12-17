@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Reflection;
 using ReportHandler.BLL.Models;
 using ReportHandler.DAL.AutoMapperSetup;
 using ReportHandler.DAL.Contracts.Interfaces;
@@ -26,15 +27,13 @@ namespace ReportHandler.PL.Console
 
         static void Main(string[] args)
         {
-            var folderToWatch = string.Empty;
-            var fileFilter = string.Empty;
-
             try
             {
-                folderToWatch = ConfigurationManager.AppSettings["FolderToWatch"];
-                fileFilter = ConfigurationManager.AppSettings["FileFilter"];
+                var folderToWatch = ConfigurationManager.AppSettings["FolderToWatch"];
+                var fileFilter = ConfigurationManager.AppSettings["FileFilter"];
+                var folderForProcessedFiles = ConfigurationManager.AppSettings["FolderForProcessedFiles"];
 
-                var watcher = new FolderWatcher(folderToWatch, fileFilter, container.GetInstance<FileHandler>());
+                var watcher = new FolderWatcher(folderToWatch, fileFilter, folderForProcessedFiles, container.GetInstance<FileHandler>());
                 watcher.Start();
 
                 System.Console.ReadKey();

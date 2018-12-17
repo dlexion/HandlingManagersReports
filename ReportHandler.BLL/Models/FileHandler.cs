@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ReportHandler.DAL.Contracts.DTO;
 using ReportHandler.DAL.Contracts.Interfaces;
-using ReportHandler.DAL.Models;
 
 namespace ReportHandler.BLL.Models
 {
@@ -26,11 +25,15 @@ namespace ReportHandler.BLL.Models
             _factory = factory;
         }
 
-        public Task<bool> ParseFile(string path)
+        public Task ParseFile(string path, string folderForProcessedFile)
         {
-            // TODO check if file exists
+            var fileInfo = new FileInfo(path);
+            if (!fileInfo.Exists)
+            {
+                return null;
+            }
 
-            return Task<bool>.Factory.StartNew(() =>
+            return Task.Factory.StartNew(() =>
             {
                 Console.WriteLine($"Start process {path}");
 
@@ -40,15 +43,13 @@ namespace ReportHandler.BLL.Models
 
                     while ((line = sr.ReadLine()) != null)
                     {
-                        //Thread.Sleep(100);
                         var data = ParseLine(line);
 
-                        // TODO
-                        // example how will work
                         if (data.Length < 4 || data.Length > 4)
                         {
-                            throw new ArgumentException();
+                            break;
                         }
+
                         var order = new OrderDTO();
                         order.Date = DateTime.ParseExact(data[0], "dd.MM.yyyy", null);
                         order.Customer = ProcessCustomer(data[1]);
@@ -60,10 +61,29 @@ namespace ReportHandler.BLL.Models
                         SaveOrder(order);
                     }
                 }
+
+                MoveFile(path, folderForProcessedFile);
                 Console.WriteLine("DONE! {0}", path);
-                return true;
+            });
+        }
+
+        private void MoveFile(string path, string destinationFolder)
+        {
+            var sourceInfo = new FileInfo(path);
+
+            var destinationPath = destinationFolder + $"\\{sourceInfo.Name}";
+
+            var destinationInfo = new FileInfo(destinationPath);
+
+            if (destinationInfo.Exists)
+            {
+                destinationInfo.Delete();
             }
-            );
+
+            if (!Directory.Exists(destinationFolder))
+                Directory.CreateDirectory(destinationFolder);
+
+            sourceInfo.MoveTo(destinationPath);
         }
 
         private void SaveOrder(OrderDTO order)
@@ -114,21 +134,24 @@ namespace ReportHandler.BLL.Models
 
                 var item = uow.GetItems(itemSearchCriteria).FirstOrDefault();
 
-                if (item == null)
+                if (item != null)
                 {
-                    item = new ItemDTO() { Name = itemLine };
+                    return item;
+                }
 
-                    lock (_lockers[item.GetType()])
+                item = new ItemDTO() { Name = itemLine };
+
+                lock (_lockers[item.GetType()])
+                {
+                    if (uow.GetItems(itemSearchCriteria).FirstOrDefault() == null)
                     {
-                        if (uow.GetItems(itemSearchCriteria).FirstOrDefault() == null)
-                        {
-                            uow.AddItem(item);
-                            uow.Save();
-                        }
+                        uow.AddItem(item);
+                        uow.Save();
                     }
                 }
 
                 return uow.GetItems(itemSearchCriteria).FirstOrDefault();
+
             }
         }
 
