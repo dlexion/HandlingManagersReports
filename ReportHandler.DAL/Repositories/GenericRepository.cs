@@ -1,11 +1,8 @@
 ﻿using ReportHandler.DAL.Contracts.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using AutoMapper;
-using ReportHandler.DAL.Contracts.DTO;
 
 namespace ReportHandler.DAL.Repositories
 {
