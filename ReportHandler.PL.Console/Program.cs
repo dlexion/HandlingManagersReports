@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using ReportHandler.BLL.Interfaces;
 using ReportHandler.BLL.Models;
 using ReportHandler.DAL.AutoMapperSetup;
 using ReportHandler.DAL.Contracts.Interfaces;
@@ -19,7 +20,7 @@ namespace ReportHandler.PL.Console
             container = new Container();
 
             container.RegisterInstance<IUnitOfWorkFactory>(new UnitOfWorkFactory());
-            container.Register<FileHandler>();
+            container.Register<IFileHandler, FileHandler>();
 
             container.Verify();
         }
@@ -32,7 +33,7 @@ namespace ReportHandler.PL.Console
                 var fileFilter = ConfigurationManager.AppSettings["FileFilter"];
                 var folderForProcessedFiles = ConfigurationManager.AppSettings["FolderForProcessedFiles"];
 
-                var watcher = new FolderWatcher(folderToWatch, fileFilter, folderForProcessedFiles, container.GetInstance<FileHandler>());
+                var watcher = new FolderWatcher(folderToWatch, fileFilter, folderForProcessedFiles, container.GetInstance<IFileHandler>());
                 watcher.Start();
 
                 System.Console.ReadKey();
