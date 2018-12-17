@@ -33,7 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.4.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.4.2\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -63,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
@@ -71,6 +83,20 @@
     <EmbeddedResource Include="ReportHandlerService.resx">
       <DependentUpon>ReportHandlerService.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReportHandler.BLL\ReportHandler.BLL.csproj">
+      <Project>{1C54F29F-B257-4091-A7E0-885B96618620}</Project>
+      <Name>ReportHandler.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReportHandler.DAL.Contracts\ReportHandler.DAL.Contracts.csproj">
+      <Project>{91C2ACE7-E449-4B0C-805C-EB8158B5A5AA}</Project>
+      <Name>ReportHandler.DAL.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReportHandler.DAL\ReportHandler.DAL.csproj">
+      <Project>{B54AC80F-47BE-406D-AC4A-25CC6F613153}</Project>
+      <Name>ReportHandler.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

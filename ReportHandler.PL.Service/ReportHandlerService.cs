@@ -1,30 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+using ReportHandler.BLL.Models;
+using ReportHandler.DAL.AutoMapperSetup;
+using ReportHandler.DAL.Contracts.Interfaces;
+using ReportHandler.DAL.Models;
+using SimpleInjector;
 
 namespace ReportHandler.PL.Service
 {
     public partial class ReportHandlerService : ServiceBase
     {
+        private FolderWatcher watcher;
+        private readonly Container container;
+
         public ReportHandlerService()
         {
             InitializeComponent();
+
+            AutoMapperConfiguration.Configure();
+
+            container = new Container();
+
+            container.RegisterInstance<IUnitOfWorkFactory>(new UnitOfWorkFactory());
+            container.Register<FileHandler>();
+
+            container.Verify();
         }
 
         protected override void OnStart(string[] args)
         {
-            File.AppendAllText(@"D:\TestFolder\1.txt","It works");
+            var folderToWatch = ConfigurationManager.AppSettings["FolderToWatch"];
+            var fileFilter = ConfigurationManager.AppSettings["FileFilter"];
+            var folderForProcessedFiles = ConfigurationManager.AppSettings["FolderForProcessedFiles"];
+
+            watcher = new FolderWatcher(folderToWatch, fileFilter, folderForProcessedFiles, container.GetInstance<FileHandler>());
+            watcher.Start();
         }
 
         protected override void OnStop()
         {
+            watcher.Dispose();
         }
     }
 }
