@@ -54,10 +54,6 @@
       <Project>{91c2ace7-e449-4b0c-805c-eb8158b5a5aa}</Project>
       <Name>ReportHandler.DAL.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ReportHandler.DAL\ReportHandler.DAL.csproj">
-      <Project>{B54AC80F-47BE-406D-AC4A-25CC6F613153}</Project>
-      <Name>ReportHandler.DAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

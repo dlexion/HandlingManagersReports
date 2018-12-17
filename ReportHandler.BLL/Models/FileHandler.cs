@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,6 +12,7 @@ namespace ReportHandler.BLL.Models
 {
     public class FileHandler
     {
+        private const char CsvSeparator = ',';
         private readonly Dictionary<Type, object> _lockers = new Dictionary<Type, object>()
         {
             {typeof(ManagerDTO), new object() },
@@ -43,7 +45,7 @@ namespace ReportHandler.BLL.Models
 
                     while ((line = sr.ReadLine()) != null)
                     {
-                        var data = ParseLine(line);
+                        var data = ParseLine(line, CsvSeparator);
 
                         if (data.Length < 4 || data.Length > 4)
                         {
@@ -51,12 +53,14 @@ namespace ReportHandler.BLL.Models
                         }
 
                         var order = new OrderDTO();
-                        order.Date = DateTime.ParseExact(data[0], "dd.MM.yyyy", null);
+
+                        DateTime.TryParseExact(data[0], "dd.MM.yyyy", null,
+                            DateTimeStyles.None, out var dateTime);
+                        order.Date = dateTime;
                         order.Customer = ProcessCustomer(data[1]);
                         order.Item = ProcessItem(data[2]);
                         order.Cost = Convert.ToDecimal(data[3]);
-
-                        order.Manager = ProcessManager("Ivanov");
+                        order.Manager = ProcessManager(fileInfo.Name);
 
                         SaveOrder(order);
                     }
@@ -95,22 +99,25 @@ namespace ReportHandler.BLL.Models
             }
         }
 
-        private string[] ParseLine(string line)
+        private string[] ParseLine(string line, char separator)
         {
-            return line.Split(',');
+            return line.Split(separator);
         }
 
         private ManagerDTO ProcessManager(string managerLine)
         {
             using (var uow = _factory.GetInstance())
             {
-                Expression<Func<ManagerDTO, bool>> managerSearchCriteria = x => x.LastName == managerLine;
+                var customerInfo = ParseLine(managerLine, '_');
+                var lastName = customerInfo[0];
+
+                Expression<Func<ManagerDTO, bool>> managerSearchCriteria = x => x.LastName == lastName;
 
                 var manager = uow.GetManagers(managerSearchCriteria).FirstOrDefault();
 
                 if (manager == null)
                 {
-                    manager = new ManagerDTO { LastName = managerLine };
+                    manager = new ManagerDTO { LastName = lastName };
 
                     lock (_lockers[manager.GetType()])
                     {
@@ -151,7 +158,6 @@ namespace ReportHandler.BLL.Models
                 }
 
                 return uow.GetItems(itemSearchCriteria).FirstOrDefault();
-
             }
         }
 
@@ -159,17 +165,17 @@ namespace ReportHandler.BLL.Models
         {
             using (var uow = _factory.GetInstance())
             {
-                var name = ParseFullName(customerLine);
-                var first = name[0];
-                var last = name[1];
+                var fullName = ParseLine(customerLine, ' ');
+                var firstName = fullName[0];
+                var lastName = fullName[1];
 
-                Expression<Func<CustomerDTO, bool>> customerSearchCriteria = (x => x.FirstName == first && x.LastName == last);
+                Expression<Func<CustomerDTO, bool>> customerSearchCriteria = (x => x.FirstName == firstName && x.LastName == lastName);
 
                 var customer = uow.GetCustomers(customerSearchCriteria).FirstOrDefault();
 
                 if (customer == null)
                 {
-                    customer = new CustomerDTO() { FirstName = first, LastName = last };
+                    customer = new CustomerDTO() { FirstName = firstName, LastName = lastName };
 
                     lock (_lockers[customer.GetType()])
                     {
@@ -183,11 +189,6 @@ namespace ReportHandler.BLL.Models
 
                 return uow.GetCustomers(customerSearchCriteria).FirstOrDefault();
             }
-        }
-
-        private string[] ParseFullName(string fullName)
-        {
-            return fullName.Split(' ');
         }
     }
 }
