@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace ReportHandler.BLL.Models
 {
@@ -11,7 +9,6 @@ namespace ReportHandler.BLL.Models
         private readonly string _filter;
         private readonly string _folderForProcessedFile;
 
-        // TODO replace with interface
         private readonly FileHandler _handler;
 
         private FileSystemWatcher _watcher;
@@ -45,8 +42,6 @@ namespace ReportHandler.BLL.Models
             _watcher.Created -= Watcher_Created;
 
             _watcher.EnableRaisingEvents = false;
-            Dispose();
-            _watcher = null;
         }
 
         private void Watcher_Created(object sender, FileSystemEventArgs e)
@@ -67,6 +62,7 @@ namespace ReportHandler.BLL.Models
         {
             Stop();
             _watcher.Dispose();
+            _watcher = null;
         }
     }
 }

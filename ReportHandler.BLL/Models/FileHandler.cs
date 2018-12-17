@@ -37,8 +37,6 @@ namespace ReportHandler.BLL.Models
 
             return Task.Factory.StartNew(() =>
             {
-                Console.WriteLine($"Start process {path}");
-
                 using (var sr = new StreamReader(path))
                 {
                     string line;
@@ -53,7 +51,6 @@ namespace ReportHandler.BLL.Models
                         }
 
                         var order = new OrderDTO();
-
                         DateTime.TryParseExact(data[0], "dd.MM.yyyy", null,
                             DateTimeStyles.None, out var dateTime);
                         order.Date = dateTime;
@@ -67,7 +64,6 @@ namespace ReportHandler.BLL.Models
                 }
 
                 MoveFile(path, folderForProcessedFile);
-                Console.WriteLine("DONE! {0}", path);
             });
         }
 
