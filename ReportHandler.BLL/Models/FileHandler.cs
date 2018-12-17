@@ -88,10 +88,10 @@ namespace ReportHandler.BLL.Models
 
         private void SaveOrder(OrderDTO order)
         {
-            using (var uow = _factory.GetInstance())
+            using (var unitOfWork = _factory.GetInstance())
             {
-                uow.AddOrder(order);
-                uow.Save();
+                unitOfWork.AddOrder(order);
+                unitOfWork.Save();
             }
         }
 
@@ -102,14 +102,14 @@ namespace ReportHandler.BLL.Models
 
         private ManagerDTO ProcessManager(string managerLine)
         {
-            using (var uow = _factory.GetInstance())
+            using (var unitOfWork = _factory.GetInstance())
             {
                 var customerInfo = ParseLine(managerLine, '_');
                 var lastName = customerInfo[0];
 
                 Expression<Func<ManagerDTO, bool>> managerSearchCriteria = x => x.LastName == lastName;
 
-                var manager = uow.GetManagers(managerSearchCriteria).FirstOrDefault();
+                var manager = unitOfWork.GetManagers(managerSearchCriteria).FirstOrDefault();
 
                 if (manager == null)
                 {
@@ -117,25 +117,25 @@ namespace ReportHandler.BLL.Models
 
                     lock (_lockers[manager.GetType()])
                     {
-                        if (uow.GetManagers(managerSearchCriteria).FirstOrDefault() == null)
+                        if (unitOfWork.GetManagers(managerSearchCriteria).FirstOrDefault() == null)
                         {
-                            uow.AddManager(manager);
-                            uow.Save();
+                            unitOfWork.AddManager(manager);
+                            unitOfWork.Save();
                         }
                     }
                 }
 
-                return uow.GetManagers(managerSearchCriteria).FirstOrDefault();
+                return unitOfWork.GetManagers(managerSearchCriteria).FirstOrDefault();
             }
         }
 
         private ItemDTO ProcessItem(string itemLine)
         {
-            using (var uow = _factory.GetInstance())
+            using (var unitOfWork = _factory.GetInstance())
             {
                 Expression<Func<ItemDTO, bool>> itemSearchCriteria = x => x.Name == itemLine;
 
-                var item = uow.GetItems(itemSearchCriteria).FirstOrDefault();
+                var item = unitOfWork.GetItems(itemSearchCriteria).FirstOrDefault();
 
                 if (item != null)
                 {
@@ -146,20 +146,20 @@ namespace ReportHandler.BLL.Models
 
                 lock (_lockers[item.GetType()])
                 {
-                    if (uow.GetItems(itemSearchCriteria).FirstOrDefault() == null)
+                    if (unitOfWork.GetItems(itemSearchCriteria).FirstOrDefault() == null)
                     {
-                        uow.AddItem(item);
-                        uow.Save();
+                        unitOfWork.AddItem(item);
+                        unitOfWork.Save();
                     }
                 }
 
-                return uow.GetItems(itemSearchCriteria).FirstOrDefault();
+                return unitOfWork.GetItems(itemSearchCriteria).FirstOrDefault();
             }
         }
 
         private CustomerDTO ProcessCustomer(string customerLine)
         {
-            using (var uow = _factory.GetInstance())
+            using (var unitOfWork = _factory.GetInstance())
             {
                 var fullName = ParseLine(customerLine, ' ');
                 var firstName = fullName[0];
@@ -167,7 +167,7 @@ namespace ReportHandler.BLL.Models
 
                 Expression<Func<CustomerDTO, bool>> customerSearchCriteria = (x => x.FirstName == firstName && x.LastName == lastName);
 
-                var customer = uow.GetCustomers(customerSearchCriteria).FirstOrDefault();
+                var customer = unitOfWork.GetCustomers(customerSearchCriteria).FirstOrDefault();
 
                 if (customer == null)
                 {
@@ -175,15 +175,15 @@ namespace ReportHandler.BLL.Models
 
                     lock (_lockers[customer.GetType()])
                     {
-                        if (uow.GetCustomers(customerSearchCriteria).FirstOrDefault() == null)
+                        if (unitOfWork.GetCustomers(customerSearchCriteria).FirstOrDefault() == null)
                         {
-                            uow.AddCustomer(customer);
-                            uow.Save();
+                            unitOfWork.AddCustomer(customer);
+                            unitOfWork.Save();
                         }
                     }
                 }
 
-                return uow.GetCustomers(customerSearchCriteria).FirstOrDefault();
+                return unitOfWork.GetCustomers(customerSearchCriteria).FirstOrDefault();
             }
         }
     }
