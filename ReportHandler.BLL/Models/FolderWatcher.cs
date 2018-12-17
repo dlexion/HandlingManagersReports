@@ -14,7 +14,6 @@ namespace ReportHandler.BLL.Models
 
         private FileSystemWatcher _watcher;
 
-
         public FolderWatcher(string path, string filter, string folderForProcessedFile, IFileHandler fileHandler)
         {
             _handler = fileHandler;
