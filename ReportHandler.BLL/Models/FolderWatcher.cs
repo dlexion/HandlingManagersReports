@@ -27,8 +27,8 @@ namespace ReportHandler.BLL.Models
 
         public void Start()
         {
-            // TODO existing files
-            //string[] fileList = System.IO.Directory.GetFiles(rootFolderPath, filesToDelete);
+            ProcessExistingFiles();
+
             if (_watcher == null)
             {
                 InitializeWatcher();
@@ -59,7 +59,15 @@ namespace ReportHandler.BLL.Models
             };
         }
 
-        //private void 
+        private void ProcessExistingFiles()
+        {
+            string[] fileList = Directory.GetFiles(_path, _filter);
+
+            foreach (var filePath in fileList)
+            {
+                _handler.ParseFile(filePath, _folderForProcessedFile);
+            }
+        }
 
         #region IDisposable implemintation
 
