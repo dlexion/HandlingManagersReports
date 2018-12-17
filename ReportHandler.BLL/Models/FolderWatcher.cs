@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using ReportHandler.BLL.Interfaces;
 
 namespace ReportHandler.BLL.Models
 {
@@ -9,12 +10,12 @@ namespace ReportHandler.BLL.Models
         private readonly string _filter;
         private readonly string _folderForProcessedFile;
 
-        private readonly FileHandler _handler;
+        private readonly IFileHandler _handler;
 
         private FileSystemWatcher _watcher;
 
 
-        public FolderWatcher(string path, string filter, string folderForProcessedFile, FileHandler fileHandler)
+        public FolderWatcher(string path, string filter, string folderForProcessedFile, IFileHandler fileHandler)
         {
             _handler = fileHandler;
             _path = path;
@@ -58,11 +59,17 @@ namespace ReportHandler.BLL.Models
             };
         }
 
+        //private void 
+
+        #region IDisposable implemintation
+
         public void Dispose()
         {
             Stop();
             _watcher.Dispose();
             _watcher = null;
         }
+
+        #endregion
     }
 }

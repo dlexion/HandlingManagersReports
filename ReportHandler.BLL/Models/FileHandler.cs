@@ -5,12 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ReportHandler.BLL.Interfaces;
 using ReportHandler.DAL.Contracts.DTO;
 using ReportHandler.DAL.Contracts.Interfaces;
 
 namespace ReportHandler.BLL.Models
 {
-    public class FileHandler
+    public class FileHandler : IFileHandler
     {
         private const char CsvSeparator = ',';
         private readonly Dictionary<Type, object> _lockers = new Dictionary<Type, object>()
