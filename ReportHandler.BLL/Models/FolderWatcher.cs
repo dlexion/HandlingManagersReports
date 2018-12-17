@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ReportHandler.BLL.Models
 {
-    public class FolderWatcher : IDisposable
+    public sealed class FolderWatcher : IDisposable
     {
         private readonly string _path;
         private readonly string _filter;
@@ -65,6 +65,7 @@ namespace ReportHandler.BLL.Models
 
         public void Dispose()
         {
+            Stop();
             _watcher.Dispose();
         }
     }
