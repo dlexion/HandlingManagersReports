@@ -12,16 +12,14 @@ namespace ReportHandler.DAL.Models
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly DbContext _context;
-        private readonly IGenericRepository<Customer> _customers;
-        private readonly IGenericRepository<Item> _items;
-        private readonly IGenericRepository<Manager> _managers;
-        private readonly IGenericRepository<Order> _orders;
+        private DbContext _context;
+        private IGenericRepository<Customer> _customers;
+        private IGenericRepository<Item> _items;
+        private IGenericRepository<Manager> _managers;
+        private IGenericRepository<Order> _orders;
 
         public UnitOfWork()
         {
-            //AutoMapperConfiguration.Configure();
-
             _context = new ReportModelContainer();
 
             _customers = new GenericRepository<Customer>(_context);
@@ -171,10 +169,40 @@ namespace ReportHandler.DAL.Models
             _context.SaveChanges();
         }
 
-        // TODO
+        #region IDisposable implementation
+
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _customers = null;
+                    _items = null;
+                    _managers = null;
+                    _orders = null;
+                }
+
+                _context.Dispose();
+                _context = null;
+
+                disposedValue = true;
+            }
+        }
+
+        ~UnitOfWork()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
         {
-            _context.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        #endregion
     }
 }
