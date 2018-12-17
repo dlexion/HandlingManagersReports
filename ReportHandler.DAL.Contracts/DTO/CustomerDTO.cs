@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ReportHandler.DAL.Contracts.DTO
+﻿namespace ReportHandler.DAL.Contracts.DTO
 {
     public class CustomerDTO
     {
